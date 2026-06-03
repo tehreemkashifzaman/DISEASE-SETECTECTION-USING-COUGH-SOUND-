@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>How It Works | CoughGuard - Disease Detection Using Cough Sound</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Google Fonts for Modern Look -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+:root {
+  --primary: #1a80d8;
+  --secondary: #24c1ac;
+  --light: #f5fcff;
+  --bg-gradient: linear-gradient(115deg, #eaf6ff 0%, #ddf9fa 100%);
+  --accent: #fbc02d;
+  --shadow: 0 6px 30px 0 #1a80d84a;
+  --card-radius: 1.7em;
+  --step-shadow: 0 2px 8px -3px #24c1ac44;
+}
+body {
+  font-family: 'Montserrat', 'Quicksand', Arial, sans-serif;
+  margin: 0;
+  background: var(--bg-gradient);
+  color: #233045;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+.header {
+  width: 100vw;
+  background: #fff;
+  box-shadow: 0 3px 18px -7px #1a80d81a;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.2em 2em;
+  position: sticky; top: 0; z-index:9;
+}
+.header .logo {
+  display: flex; align-items: center; gap: .9em;
+  font-size: 1.55em; font-weight: 700; color: var(--primary);
+}
+.header nav {
+  display: flex; gap: 1.7em;
+}
+.header nav a {
+  text-decoration: none; color: #194259;
+  font-family: Quicksand; font-weight: 600; font-size: 1.12em;
+  padding: .43em 1.1em;
+  border-radius: .95em;
+  transition: color .19s, background .18s;
+}
+.header nav a:hover {
+  background: var(--primary); color: #fff;
+}
+@media (max-width:700px) {
+  .header {flex-direction: column; gap:1em;}
+  .header .logo {font-size:1em;}
+  .header nav {flex-wrap:wrap; gap:.7em;}
+}
+.main-content {
+  max-width: 1200px;
+  margin: 2.9em auto 0 auto;
+  padding: 1em 2vw;
+}
+.section-title {
+  font-size:2.1em;font-weight:700;
+  color:var(--primary);
+  margin-top:.2em;margin-bottom:.49em;font-family:Quicksand;
+  letter-spacing:0.04em; text-align:center;
+  background: linear-gradient(91deg,#18aee6 60%,var(--secondary) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.intro-container {
+  background: #fff;
+  border-radius:var(--card-radius);
+  box-shadow:var(--shadow);
+  padding:2em;
+  display:flex;gap:2.3em;align-items:center;justify-content:space-between;margin:0 0 2.7em 0;
+  overflow: hidden;
+  position: relative;
+}
+.intro-text {
+  flex:1; min-width:200px;
+}
+.intro-text h2 {margin-top:0;margin-bottom:.6em;color:var(--primary);}
+.intro-text p {
+  font-size:1.13em;line-height:1.68em;margin-bottom:1.2em;
+  color:#374061;
+}
+@media (max-width:850px) {
+  .intro-container {flex-direction:column;text-align:center;padding:1.2em;}
+}
+.steps-section {
+  margin:0 auto 3em auto;max-width:1200px;
+}
+.steps-grid {
+  display:grid;grid-template-columns:repeat(4,1fr);gap:2em;margin:1.7em 0 1.4em 0;
+}
+@media (max-width:1020px){
+  .steps-grid {grid-template-columns:repeat(2,1fr);}
+}
+@media (max-width:600px){
+  .steps-grid {grid-template-columns:1fr;}
+}
+.step-card {
+  background:var(--light);
+  border-radius:1.2em;
+  box-shadow:var(--step-shadow);
+  padding:2.1em 1em 2em 1em;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+  transition:transform .17s,box-shadow .17s;
+}
+.step-card:hover {
+  transform:scale(1.064) translateY(-7px);
+  box-shadow: 0 10px 27px -9px var(--secondary);
+  background:linear-gradient(108deg,#e8f5ff 60%,#e0f9f3 100%);
+}
+.step-num {
+  position:absolute;top:1.1em;right:1.1em;font-size:2.2em;
+  font-weight:900;color:#18aee6;opacity:0.11;pointer-events:none;
+  letter-spacing:.02em;
+  font-family:Montserrat;
+}
+.step-title {
+  font-size:1.1em;font-weight:700;color:var(--secondary);margin-bottom:.3em;margin-top:.8em;font-family:Quicksand;
+}
+.step-desc {font-size:1.05em;color:#384347;line-height:1.53;}
+@media(max-width:480px){
+  .step-card{padding:1.1em .5em 1.3em .5em;}
+}
+.process-diagram-wrap {
+  max-width:660px;
+  margin:2.5em auto 0 auto;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:rgba(255,255,255,0.92);
+  border-radius:1em;
+  box-shadow:0 2px 30px -9px #18aee633;
+  padding:2em 1em 1.3em 1em;
+}
+.process-diagram-desc {
+  font-size:1.13em;color:#38505d;
+  text-align:center;
+}
+.psych-cta {
+  background:var(--accent);
+  color:#143861;
+  padding:2.5em 2vw;
+  border-radius:1.5em;
+  text-align:center;
+  margin:3em 0 1.7em 0;
+  box-shadow: 0 4px 24px -8px #fbc02dae;
+  font-size:1.42em;font-family:Quicksand;font-weight:700;letter-spacing:.01em;
+}
+@media(max-width:600px){
+  .steps-section, .main-content {padding:0 .9vw;}
+}
+@keyframes processborder {
+  0% {box-shadow:0 2px 30px -9px #18aee633, 0 0 0 7px #24c1ac33;}
+  100% {box-shadow:0 2px 30px -9px #18aee633,0 0 0 7px #18aee6cc;}
+}
+.process-diagram-wrap {
+  animation:processborder 2.7s infinite alternate;
+}
+::-webkit-scrollbar {width:9px;background:#e1f2ff;}
+::-webkit-scrollbar-thumb {background:#c0e5ff;border-radius:9px;}
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="logo">
+      CoughDetect.AI
+    </div>
+    <nav>
+      <!-- Add nav links as desired -->
+    </nav>
+  </header>
+  <main class="main-content">
+    <div class="section-title">How this Detection of Cough Sounds fron Disease Works </div>
+    <div class="intro-container">
+      <div class="intro-text">
+        <h2>The Future of Health is in Your Voice</h2>
+        <p>
+          <b>CoughDectect.Ai</b> leverages the power of Artificial Intelligence to transform cough sounds into vital health insights.
+          Our system analyzes the frequency, duration, and subtle acoustic patterns of your cough to detect possible diseases including <b>COVID-19, healthy or symtomatic</b> .
+        </p>
+        <p>
+          Your privacy is protected. Data is never stored without your permission, and results arrive in seconds.
+        </p>
+      </div>
+    </div>
+    <section class="steps-section">
+      <div class="section-title" style="font-size:1.35em;text-align:left;margin-left:.2em;margin-right:.2em;">Step by Step: How It Works</div>
+      <div class="steps-grid">
+        <div class="step-card">
+          <span class="step-num">1</span>
+          <div class="step-title">Record or Upload Cough</div>
+          <div class="step-desc">You simply record your cough using your phone, laptop, or upload an existing audio file. No special equipment needed!</div>
+        </div>
+        <div class="step-card">
+          <span class="step-num">2</span>
+          <div class="step-title">Sound Upload & Processing</div>
+          <div class="step-desc">Audio is securely transmitted to our AI engine, where it’s pre-processed and features are extracted.</div>
+        </div>
+        <div class="step-card">
+          <span class="step-num">3</span>
+          <div class="step-title">AI Pattern Analysis</div>
+          <div class="step-desc">AI compares your cough’s acoustic "signature" against vast libraries of real-world cough sounds and disease markers.</div>
+        </div>
+        <div class="step-card">
+          <span class="step-num">4</span>
+          <div class="step-title">Instant Screening Result</div>
+          <div class="step-desc">A preliminary report is provided instantly—showing the likelihood of key respiratory illnesses and useful next steps.</div>
+        </div>
+      </div>
+    </section>
+    <section class="process-diagram-wrap">
+      <div class="process-diagram-desc">
+        <b>From Cough to Care:</b> The entire process, from recording to instant analysis, is powered by machine learning and real medical data. We combine technical accuracy with ease for everyone.
+      </div>
+    </section>
+    <div class="psych-cta">
+      <div>
+        <span style="color:#1a80d8;font-weight:800;font-size:1.18em;">Your cough could help you—and others—breathe easy.</span>
+        <br>
+        Join our mission: <b>try CoughGuard, invite friends, and help make diseases more detectable by sound. <a href="/contact" style="color:var(--secondary);text-decoration:underline;">Contact us!</a></b>
+      </div>
+    </div>
+  </main>
+  <footer style="background:#1a80d8;color:#fff;text-align:center;padding:1.7em 0 .7em 0;border-top-left-radius:1.1em;border-top-right-radius:1.1em;margin-top:4em;box-shadow:0 1px 17px -7px #1a80d822;">
+    &copy; 2025 <b style="color:#fbc02d">CoughGuard</b> | Disease Detection with AI | Powered by AI Health<br>
+    <div style="margin-top:1em">
+      <a href="https://twitter.com/" target="_blank" style="color:#fff;">Twitter</a>
+      <a href="https://instagram.com/" target="_blank" style="color:#fff;margin-left:2em;">Instagram</a>
+      <a href="https://linkedin.com/" target="_blank" style="color:#fff;margin-left:2em;">LinkedIn</a>
+    </div>
+  </footer>
+  <script>
+  // Animation trigger for step cards (fade/scale as in-view)
+  function animateStepsOnScroll() {
+    document.querySelectorAll('.step-card').forEach(card => {
+      let rect = card.getBoundingClientRect();
+      if(rect.top < window.innerHeight - 100) {
+        card.style.opacity = "1";
+        card.style.transform = "scale(1) translateY(0)";
+      }
+    });
+  }
+  window.addEventListener("scroll", animateStepsOnScroll);
+  window.addEventListener("DOMContentLoaded", function() {
+    document.querySelectorAll('.step-card').forEach(c=>{
+      c.style.opacity = "0.35";
+      c.style.transform = "scale(.90) translateY(45px)";
+      c.style.transition = "opacity .8s, transform .8s cubic-bezier(.24,.94,.49,.89)";
+    });
+    setTimeout(()=>animateStepsOnScroll(),100);
+  });
+  </script>
+</body>
+</html>

@@ -1,0 +1,354 @@
+<!-- <!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Test Yourself - Disease Detection Using Cough Sound</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+:root {
+  --primary: #1765ff;
+  --accent: #15dedb;
+  --glass-light: rgba(255,255,255,0.94);
+  --shadow: 0 8px 32px 0 #1e2b6258;
+  --card-radius: 2rem;
+}
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Montserrat', 'Quicksand', Arial, sans-serif;
+  margin: 0;
+  background: linear-gradient(106deg, #e9f4ff 0%, #d8f9f8 100%);
+  color: #222d38;
+}
+header {
+  background: var(--glass-light);
+  box-shadow: 0 4px 14px -8px #1765ff22;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.8em 3vw;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+header .logo {
+  font-weight: 700;
+  font-size: 1.48em;
+  color: var(--primary);
+  letter-spacing:.05em;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+nav a {
+  margin-left: 24px;
+  color: #355;
+  text-decoration: none;
+  font-weight: 600;
+  font-family: 'Quicksand';
+  padding: 0.45em 1em;
+  border-radius: .7em;
+  transition: background .18s, color .18s;
+  font-size: 1.06em;
+}
+nav a:hover { background: var(--primary); color: #fff; }
+main {max-width: 660px; margin: 5.2em auto 0 auto; background: var(--glass-light); border-radius: var(--card-radius); box-shadow: var(--shadow); padding: 3.2em 2vw 2.2em 2vw;}
+@media (max-width:700px) {
+  header { flex-direction:column; gap:5px;}
+  main {margin-top: 2.4em;}
+}
+.test-header {
+  text-align:center;
+  font-size:2.2em;
+  font-weight:700;
+  color:var(--primary);
+  margin-bottom: .55em;
+}
+.test-sub {
+  text-align:center;
+  font-size:1.15em;
+  margin-bottom:2em;
+  color:#33456e;
+  font-family:Quicksand;
+}
+.test-main-content {
+  display: flex;
+  flex-direction: row;
+  gap: 2em;
+  align-items: center;
+  margin-bottom: 2em;
+}
+@media (max-width:850px) { .test-main-content {flex-direction:column;gap:1.5em;} }
+.test-panel { flex:1; min-width:220px; display:flex; flex-direction:column; align-items:center; }
+.wave-frame {
+  width: 340px; height: 90px; background: #effffd; border-radius: 1.1em;
+  box-shadow: 0 3px 15px -8px #1765ff32; border:1px solid #d4e4ff;
+  margin-bottom:1em; display: flex; align-items: center; justify-content: center;
+}
+@media (max-width:450px){ .wave-frame{width:92vw;} }
+.audio-actions {
+  display: flex; gap: 1em; align-items: center; margin-bottom: .9em; margin-top:.47em;
+}
+#recordBtn, #submitBtn, #retakeBtn {
+  background: linear-gradient(90deg,#15dedb 25%,#1765ff 100%);
+  color: #fff; border: none; border-radius: 14px; padding: .62em 1.42em;
+  cursor: pointer; font-size: 1.09em; font-weight: 600;
+  box-shadow: 0 5px 14px -7px #15dedb31; transition: box-shadow .13s,background .19s;
+}
+#recordBtn:hover:enabled,#submitBtn:hover:enabled,#retakeBtn:hover{
+  background:linear-gradient(90deg,#1765ff 30%,#15dedb 100%);
+  box-shadow:0 8px 21px -10px #1765ff10;
+}
+#submitBtn:disabled {
+  background:#d0f6ff; color:#888; box-shadow:none; cursor:not-allowed;
+}
+input[type="file"] {
+  font-size: 1.06em; background: #eaf6ff; border-radius: 9px; border: 1px solid #ddf2ff;
+  font-weight: 500; margin-left:.5em;
+}
+#audioPlayback {margin-top: 1.3em;accent-color:var(--accent);border-radius:11px;box-shadow:0 5px 18px -8px #15dedb65;background:#f9fcff;}
+.loader {
+  border: 6px solid #d7edfe; border-top: 6px solid #58aaff;
+  border-radius: 50%; width: 46px; height: 46px; animation: spin 0.95s linear infinite; margin-bottom: .9em;
+}
+@keyframes spin { 0%{transform:rotate(0);} 100%{transform:rotate(360deg);} }
+#loading { display:none; flex-direction:column; align-items:center;}
+.result-cards {
+  display: flex; flex-wrap: wrap; gap: 2em; justify-content: center; margin-top: 2em;
+}
+.result-card {
+  background: var(--glass-light); border-radius: 1.2em; padding: 1.6em 1em;
+  min-width: 220px; max-width: 260px;
+  box-shadow: 0 6px 14px -7px #1765ff22;
+  font-size: 1.06em; text-align: center; position: relative;
+  margin-bottom:10px;
+}
+.result-card .card-icon { font-size: 2.2em; margin-bottom: .75em; }
+.result-card .conf { color: var(--primary); font-weight: 700; }
+.result-card .tip { color: var(--accent);}
+.chronic-badge {
+  display: inline-block;
+  background: var(--chronic);
+  color: #fff;
+  font-size: 0.93em;
+  border-radius: .8em;
+  padding: .12em .63em;
+  margin-left: .33em;
+}
+footer {
+  text-align: center;
+  padding: 1.4em 2vw 1em 2vw;
+  background: #deecff;
+  color: #333;
+  font-size: 1.03em;
+  border-radius:0 0 1.1em 1.1em;
+  margin-top: 3.5em;
+}
+footer a { color: var(--primary); text-decoration: none; font-weight: 600;}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      CoughDetect.AI
+    </div>
+    <!-- <nav> ... </nav> -->
+  </header>
+  <main>
+    <div class="test-header">
+      Test Yourself
+    </div>
+    <div class="test-sub">
+      Record or upload your cough and see what CoughDetect.AI can tell you about your respiratory health.
+      <br>
+      <span style="font-size:.99em;color:#667;">The demo will flag possible chronic or acute illnesses by sound pattern.</span>
+    </div>
+    <div class="test-main-content">
+      <div class="test-panel">
+        <div class="wave-frame">
+          <canvas id="soundwave-canvas"></canvas>
+        </div>
+        <div class="audio-actions">
+          <button id="recordBtn">🎙️ Record</button>
+          <input type="file" id="fileInput" accept="audio/*">
+        </div>
+        <audio id="audioPlayback" controls style="display:none;width:100%;max-width:340px;"></audio>
+        <button id="submitBtn" disabled>Analyze</button>
+        <div id="loading">
+          <div class="loader"></div><span>Processing...</span>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:1.2em;font-size:1.07em;color:#436;">
+      Share the results with your doctor for best care!
+    </div>
+    <div class="result-cards" id="resultCards"></div>
+    <button id="retakeBtn" style="display:none;margin:2em auto 0 auto;display:block;">Retake Test</button>
+  </main>
+  <footer>
+    &copy; 2025 <b>CoughDetect.AI</b> | For information only, not a diagnosis.<br>
+    <a href="index.html#contact">Contact & Support</a>
+  </footer>
+<script>
+// Static waveform
+const canvas = document.getElementById('soundwave-canvas');
+function drawStaticWave() {
+  if (!canvas) return;
+  canvas.width = canvas.clientWidth * window.devicePixelRatio;
+  canvas.height = canvas.clientHeight * window.devicePixelRatio;
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.save();
+  ctx.strokeStyle = "#bfcad6";
+  ctx.lineWidth = 8;
+  ctx.beginPath();
+  let y = canvas.height / 2;
+  let amplitude = canvas.height / 3.1;
+  let freq = 2;
+  for (let i = 0; i <= canvas.width; i += 10) {
+    ctx.lineTo(i, y + Math.sin(i * 0.021 * freq) * amplitude);
+  }
+  ctx.stroke();
+  ctx.restore();
+}
+window.addEventListener('resize', drawStaticWave);
+drawStaticWave();
+
+// Record/Upload logic
+let mediaRecorder,audioChunks=[],audioBlobUrl=null;
+const recordBtn=document.getElementById('recordBtn'),
+      fileInput=document.getElementById('fileInput'),
+      submitBtn=document.getElementById('submitBtn'),
+      audioPlayback=document.getElementById('audioPlayback'),
+      loading=document.getElementById('loading'),
+      resultCards=document.getElementById('resultCards'),
+      retakeBtn=document.getElementById('retakeBtn');
+
+recordBtn.onclick = async()=>{
+  if(mediaRecorder&&mediaRecorder.state!=='inactive'){
+    mediaRecorder.stop(); recordBtn.textContent="🎙️ Record"; return;
+  }
+  audioChunks=[];
+  try{
+    const stream=await navigator.mediaDevices.getUserMedia({audio:true});
+    mediaRecorder=new MediaRecorder(stream);
+    mediaRecorder.ondataavailable=e=>audioChunks.push(e.data);
+    mediaRecorder.onstop=async()=>{
+      const audioBlob=new Blob(audioChunks,{type:'audio/webm'});
+      audioBlobUrl=URL.createObjectURL(audioBlob);
+      audioPlayback.src=audioBlobUrl; audioPlayback.style.display="block";
+      submitBtn.disabled=false;
+
+      // Upload to backend
+      const formData = new FormData();
+      formData.append('audio', audioBlob, 'recording.webm');
+      
+      try {
+        const response = await fetch('http://localhost:5000/upload', {
+          method: 'POST',
+          body: formData
+        });
+        const result = await response.json();
+        console.log('Upload success:', result);
+      } catch (err) {
+        console.error('Upload failed:', err);
+      }
+    };
+    mediaRecorder.start();
+    recordBtn.textContent="⏹️ Stop";
+    submitBtn.disabled=true;
+    audioPlayback.style.display="none";
+  }catch(err){
+    alert("Microphone permission required."); recordBtn.textContent="🎙️ Record";
+  }
+};
+fileInput.onchange = async (e)=>{
+  const file=e.target.files[0];
+  if(file){
+    audioBlobUrl=URL.createObjectURL(file);
+    audioPlayback.src=audioBlobUrl; audioPlayback.style.display="block"; submitBtn.disabled=false;
+    recordBtn.textContent="🎙️ Record";
+
+    // Upload to backend
+    const formData = new FormData();
+    formData.append('audio', file, file.name);
+    
+    try {
+      const response = await fetch('http://localhost:5000/upload', {
+        method: 'POST',
+        body: formData
+      });
+      const result = await response.json();
+      console.log('File upload success:', result);
+    } catch (err) {
+      console.error('File upload failed:', err);
+    }
+  }
+};
+function showResults(data){
+  const iconMap = {
+    "healthy": "🟢",
+    "Healthy": "🟢",
+    "COVID-19": "🟠",
+    "covid": "🟠",
+    "symptomatic": "🟡",
+    "Symptomatic": "🟡",
+    "Asthma": "🟡",
+    "Bronchitis": "🔴",
+    "Pneumonia": "🟣"
+  };
+  
+  const label = data.label;
+  const icon = iconMap[label] || "❓";
+  const confidencePercent = (data.confidence * 100).toFixed(2);
+  
+  resultCards.innerHTML=`
+    <div class="result-card">
+        <div class="card-icon">${icon}</div>
+        <b style="text-transform: capitalize;">${label}</b><br>
+        <span class="conf">${confidencePercent}% Confidence</span><br>
+        <span class="tip">Analysis completed based on cough sound pattern.</span>
+    </div>
+  `;
+};
+
+submitBtn.onclick= async ()=>{
+  loading.style.display="flex";
+  submitBtn.disabled=true; recordBtn.disabled=true; fileInput.disabled=true;
+  resultCards.innerHTML = "";
+
+  try {
+    const response = await fetch('http://localhost:5000/analyze', { method: 'POST' });
+    const result = await response.json();
+    
+    if (result.error) {
+      alert("Error: " + result.error);
+    } else {
+      showResults(result);
+      retakeBtn.style.display="block";
+      submitBtn.style.display="none";
+    }
+  } catch (err) {
+    console.error("Inference failed:", err);
+    alert("Inference failed. Check if the backend is running.");
+  } finally {
+    loading.style.display="none";
+    recordBtn.disabled=false;
+    fileInput.disabled=false;
+  }
+};
+retakeBtn.onclick=()=>{
+  resultCards.innerHTML="";
+  retakeBtn.style.display="none";
+  submitBtn.style.display="inline-block";
+  audioPlayback.style.display="none";audioPlayback.src="";
+  fileInput.value=null;submitBtn.disabled=true;recordBtn.textContent="🎙️ Record";
+};
+submitBtn.disabled=true; audioPlayback.style.display="none"; retakeBtn.style.display="none";
+</script>
+</body>
+</html>
+
+ -->
+ -->

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>The Science Behind Cough AI - CoughDetect.AI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+:root {
+  --primary: #1765ff;
+  --accent: #15dedb;
+  --chronic: #fbc02d;
+  --glass-light: rgba(255,255,255,0.97);
+  --card-radius: 2rem;
+  --shadow: 0 8px 32px 0 #1e2b6258;
+}
+body {
+  font-family: 'Montserrat', 'Quicksand', Arial, sans-serif;
+  margin: 0;
+  background: linear-gradient(106deg, #e9f4ff 0%, #eafcfb 100%);
+  color: #232d38;
+}
+header {
+  background: var(--glass-light);
+  box-shadow: 0 4px 14px -8px #1765ff22;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.8em 3vw;
+  position: sticky; top: 0;
+  z-index: 10;
+}
+header .logo {
+  font-weight: 700;
+  font-size: 1.25em;
+  color: var(--primary);
+  letter-spacing:.03em;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+nav a {
+  margin-left: 24px;
+  color: #355;
+  text-decoration: none;
+  font-weight: 600;
+  font-family: 'Quicksand';
+  padding: 0.45em 1em;
+  border-radius: .7em;
+  transition: background .18s, color .18s;
+  font-size: 1.07em;
+}
+nav a:hover { background: var(--primary); color: #fff; }
+main {max-width: 900px; margin: 4.2em auto 0 auto; background: var(--glass-light); border-radius: var(--card-radius); box-shadow: var(--shadow); padding: 3.1em 2vw 2.6em 2vw;}
+@media (max-width:700px) {
+  header { flex-direction:column; gap:5px;}
+  main {margin-top: 2.1em;}
+}
+.section-title {
+  text-align: left;
+  font-size:1.6em;
+  font-weight: 800;
+  color: var(--primary);
+  font-family: Quicksand;
+  margin-bottom: .18em;
+  letter-spacing: .01em;
+}
+.science-block {
+  margin: 2.5em 0 2.1em 0;
+  padding: 2em 1.2em 1.5em 1.2em;
+  border-radius: 1.35em;
+  background: linear-gradient(98deg,#f3fbff 66%,#e5f9f6 100%);
+  box-shadow: 0 3px 14px -8px #1765ff14;
+  font-size: 1.15em;
+  color: #253345;
+}
+.science-block:nth-child(even) {background: linear-gradient(106deg,#e5f9f6 76%,#fefbe7 100%);}
+.block-content b{color:var(--primary);}
+.detail-table {
+  width: 100%; border-collapse: collapse; font-size: 1.05em; background: #fff;
+  box-shadow: 0 2px 9px -7px #1765ff15; border-radius: 12px; margin-top: .9em; overflow: hidden;
+}
+.detail-table th, .detail-table td {
+  padding: .8em 1em;
+  border-bottom: 1px solid #f1f7fd;
+  text-align: left;
+}
+.detail-table th {background: #f6faff; font-weight: 700; color: #146;}
+.detail-table tr:last-child td {border-bottom: none;}
+.privacy-chip {
+  display: inline-block; background: var(--accent); color: #023; padding: .22em 1em;
+  border-radius: .8em; margin-left:.7em; font-weight:600; font-size:.99em; letter-spacing:.01em;
+}
+.chronic-chip, .acute-chip {
+  display: inline-block; margin-left: .17em; font-size: .94em; font-weight:600;
+  border-radius: .7em; padding: .13em .8em;
+}
+.chronic-chip { background: var(--chronic); color: #fff;}
+.acute-chip { background: var(--accent); color: #045;}
+.testimonial {
+  background: #f8faff;
+  border-radius: 1em;
+  box-shadow: 0 2px 9px -8px #1765ff22;
+  padding: 1em 1em;
+  margin-top: .5em;
+  font-style: italic;
+  color: #3d4c5d;
+  text-align: center;
+}
+footer {
+  text-align: center;
+  padding: 1.6em 2vw 1em 2vw;
+  background: #deecff;
+  color: #333;
+  font-size: 1.03em;
+  border-radius: 0 0 1.1em 1.1em;
+  margin-top: 3em;
+}
+footer a { color: var(--primary); text-decoration: none; font-weight: 600;}
+ul{margin-top:.6em;}
+  </style>
+</head>
+<body>
+<header>
+  <div class="logo">CoughDetect.AI</div>
+  <!-- <nav>
+    <a href="index.html">Home</a>
+    <a href="index.html#howitworks">How It Works</a>
+    <a href="science.html">Science</a>
+    <a href="index.html#contact">Contact</a>
+  </nav> -->
+</header>
+<main>
+  <!-- AI Technology -->
+  <div class="section-title">
+    AI-Powered Cough Analysis
+  </div>
+  <div class="science-block">
+    <div class="block-content">
+      <b>CoughDetect.AI</b> uses advanced AI and machine learning, trained on thousands of cough recordings from a variety of conditions and ages. The software breaks down each cough into distinct sound features (pitch, tone, duration, patterns), then compares them to a large, validated clinical dataset. This enables:
+      <ul>
+        <li>Detection of subtle cough differences for a range of diseases</li>
+        
+        <li>Results delivered in seconds using on-device or cloud-based AI</li>
+      </ul>
+    </div>
+  </div>
+  <!-- Training Data -->
+  <div class="section-title">
+    Data & Training
+  </div>
+  <div class="science-block">
+    <div class="block-content">
+      The underlying AI was developed using over <b> cough nearly 16000 samples</b> sourced from research hospitals, global open datasets, and clinical trials worldwide.<br>
+      <table class="detail-table">
+        <tr><th>Disease Category</th><th>AI Sensitivity</th></tr>
+        <tr><td>COVID-19</td><td>uptp 77%</td></tr>
+        
+        <tr><td>sytomatic(<span class="acute-chip">Acute</span>)</td><td>80%</td></tr>
+      </table>
+      <div style="font-size:.97em;color:#656;">Model performance is continuously improved with new data, under medical oversight.</div>
+    </div>
+  </div>
+  <!-- Security & Privacy -->
+  <div class="section-title">
+    Data Security & Privacy
+  </div>
+  <div class="science-block">
+    <div class="block-content">
+      <b>Privacy first:</b>
+      <ul>
+        <li>Recordings are <b>never stored</b> or shared unless you opt-in for research.</li>
+        <li>All AI analysis is encrypted, with no human reviewing your sound.</li>
+        <li>If donated for research, all coughs are fully anonymized.</li>
+        <li>
+          <span class="privacy-chip">GDPR &amp; HIPAA Compliant</span>
+        </li>
+      </ul>
+      <div style="font-size:0.97em;color:#555;">
+        <em>Your cough data is yours alone. You get results, not exposure.</em>
+      </div>
+    </div>
+  </div>
+  <!-- Medical Explanations -->
+  <div class="section-title">
+    Medical Explanation & Use
+  </div>
+  <div class="science-block">
+    <div class="block-content">
+      The AI identifies sound signatures found in real clinical disease (such as the wheeze of covid, or the dry cough of COVID-19), offering screening for:
+      <ul>
+        <li><b>COVID-19 and its symptoms </b></li>
+        <li>Distinction between <span class="chronic-chip">covid</span> and <span class="acute-chip">healthy</span> coughs</li>
+        <li>Instant advice and actionable insights, especially for populations with limited access to care</li>
+      </ul>
+      <div style="font-size:.98em;color:#666;">
+        <b>Remember:</b> This is a screening tool, not a medical diagnosis. Use results to inform, not replace, your visit to a healthcare professional.
+      </div>
+      <div class="testimonial">
+        "Cough AI is a promising step for public health worldwide, especially in low-resource areas." <br>&mdash; Dr. James T., Pulmonologist
+      </div>
+    </div>
+  </div>
+  <!-- Speed and Accessibility -->
+  <div class="section-title">
+    Speed &amp; Accessibility
+  </div>
+  <div class="science-block">
+    <div class="block-content">
+      <ul>
+        <li>Works on any device: phone, tablet, or PC with a microphone</li>
+        <li>Results delivered in <b>&lt;5 seconds</b>, even with slow connections</li>
+        <li>No special equipment, downloads, or login required</li>
+        <li>Designed to be accessible for non-English speakers and visually impaired users</li>
+      </ul>
+      <div style="color:#17a9bd;font-size:.99em;">
+        <em>Accessible screening, worldwide—wherever you are</em>
+      </div>
+    </div>
+  </div>
+</main>
+<footer>
+  &copy; 2025 <b>CoughDetect.AI</b> | All rights reserved.<br>
+  <a href="index.html#contact">Contact & Support</a>
+</footer>
+</body>
+</html>

@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Disease Detection Using Cough Sound</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Google Fonts for Modern Feel -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+:root {
+  --primary: #1765ff;
+  --accent: #15dedb;
+  --glass-light: rgba(255,255,255,0.8);
+  --glass-dark: rgba(23,101,255,0.05);
+  --card-radius: 2rem;
+  --shadow: 0 8px 32px 0 #1e2b6258;
+}
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Montserrat', 'Quicksand', Arial, sans-serif;
+  margin: 0;
+  background: linear-gradient(105deg, #eaf6ff 0%, #ddf9fa 100%);
+  color: #24243e;
+}
+header {
+  position: fixed;
+  width: 100vw;
+  padding: 0.7em 3vw;
+  z-index: 10;
+  background: var(--glass-light);
+  box-shadow: 0 4px 14px -8px #1765ff22;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  backdrop-filter: blur(8px);
+}
+header .logo {
+  display: flex; align-items: center; gap: 8px;
+  font-weight: 700; font-size: 1.33em; color: var(--primary);
+}
+header .logo img { width: 36px; height:36px; border-radius:50%; }
+nav a {
+  margin-left: 24px;
+  color: #444;
+  text-decoration: none;
+  font-weight: 600;
+  font-family: 'Quicksand';
+  padding: 0.4em 0.9em;
+  border-radius: .7em;
+  transition: background .18s, color .18s;
+}
+nav a:hover { background: var(--primary); color: #fff; }
+section, footer { margin: 0 auto; max-width: 1200px; padding: 4.6em 2vw 3em 2vw; }
+.hero {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 2em;
+  justify-content: space-between;
+  padding-top: 7em;
+  min-height: 420px;
+}
+.hero-image {
+  width: 350px; min-width:250px; border-radius:32px;
+  box-shadow: 0px 22px 54px -21px var(--primary);
+  transform: rotateY(11deg) rotateX(4deg);
+  background: var(--glass-dark);
+  object-fit: cover;
+}
+.hero-intro {
+  flex: 1; min-width: 270px;
+}
+.hero-intro h1 {
+  font-size: 2.35em;
+  font-weight: 700;
+  color: var(--primary);
+  margin: 0 0 .4em 0;
+  display: inline-block;
+  animation: bounceIn .95s forwards;
+}
+@keyframes bounceIn {
+  0%{opacity:0;transform:scale(0.7);}
+  60%{opacity:0.4;transform:scale(1.15);}
+  100%{opacity:1;transform:scale(1);}
+}
+.hero-intro p {
+  font-size: 1.22em;
+  color: #232333;
+  margin-bottom:1.7em;
+}
+.hero-intro .cta {
+  font-size:1.05em; font-weight:600;
+  background:linear-gradient(90deg,#15dedb 30%,#1765ff 100%);
+  color:#fff; padding:1em 2em; border:none; border-radius:1em;
+  cursor:pointer; box-shadow:0 8px 24px -10px #29d7fb55;
+  transition:background 0.14s,box-shadow .18s;
+}
+.hero-intro .cta:hover{
+ background:linear-gradient(120deg,#1765ff 50%,#15dedb 100%);
+ box-shadow:0 13px 34px -15px #29d7fbdd;
+}
+@media (max-width:660px) {
+  header { flex-direction:column; gap:6px;}
+  .hero { flex-direction:column; padding-top:2em;}
+  .hero-image { margin: 0 auto 2em auto; width:96vw;}
+}
+.how-it-works {
+  background:linear-gradient(105deg,#f0f7ff 60%,#dffaff 100%);
+  border-radius: var(--card-radius);
+  box-shadow: var(--shadow);
+  margin-top:3em;
+}
+.how-it-works .steps {
+  display: flex; flex-wrap: wrap; gap:2.1em; margin-top:2.3em; justify-content:center;
+}
+.step-card {
+  background: var(--glass-light);
+  border-radius: 1.5em;
+  padding: 2em 1em;
+  max-width: 230px;
+  min-width:170px;
+  box-shadow: 0 6px 18px -7px #1765ff17;
+  display: flex; flex-direction:column; align-items:center; text-align:center;
+  transition: transform .19s, box-shadow .15s;
+  font-size: 1.05em;
+}
+.step-card:hover {
+  transform: translateY(-7px) scale(1.045) rotateZ(-2.5deg);
+  box-shadow: 0 10px 24px -7px #15dedb36;
+}
+.step-card .icon { font-size:2.8em; margin-bottom:.7em;}
+.step-card b { color: var(--primary);}
+@media (max-width:740px) {
+ .how-it-works .steps { flex-direction:column; gap:.9em;}
+}
+.record-section {
+  background:linear-gradient(110deg,#e6fbff 70%,#eaf1ff 100%);
+  border-radius:var(--card-radius);
+  box-shadow:var(--shadow);
+  margin-top:3.4em;
+}
+.record-inner {
+  display:flex; flex-wrap: wrap; align-items:center;gap:2em; margin-top:1.5em;
+}
+@media (max-width:850px) { .record-inner {flex-direction:column;} }
+#soundwave-canvas {
+  width:320px;height:80px;border-radius:1.2em;box-shadow:0 7px 28px -9px #15dedb73;
+  background:#fff7;
+  border:1px solid #ddf2ff;
+  margin-bottom:.5em;
+}
+.audio-box {
+  min-width:250px;flex:1;
+  background: var(--glass-light);
+  backdrop-filter: blur(5px);
+  border-radius:1.2em;
+  box-shadow:0 6px 22px -12px #1765ff25;
+  padding:2em 1em 1.5em 1em;
+  display:flex;flex-direction:column;align-items:center;
+}
+.audio-actions {
+  display:flex; gap:1.2em; align-items:center;margin-bottom:.8em;margin-top:.8em;
+}
+#audioPlayback {
+  margin-top: 1.2em; accent-color: var(--accent); border-radius: 10px;
+  box-shadow: 0 5px 18px -8px #15dedb95;
+}
+#recordBtn,#submitBtn,#retakeBtn {
+  background:linear-gradient(90deg,#15dedb 30%,#1765ff 100%);
+  color:#fff; border:none; border-radius:14px; padding:.6em 1.4em;
+  cursor:pointer; font-size:1.08em; font-weight:600;
+  box-shadow:0 6px 14px -7px #15dedb31; transition:box-shadow .13s,background .15s;
+}
+#recordBtn:disabled{background:#b9e1ef;color:#888;}
+#submitBtn:disabled{background:#cbdcf5;color:#444;box-shadow:none;cursor:not-allowed;}
+#recordBtn:hover:enabled,#submitBtn:hover:enabled,#retakeBtn:hover{
+  background:linear-gradient(90deg,#1765ff 30%,#15dedb 100%);
+  box-shadow:0 12px 26px -10px #1765ff09;
+}
+input[type="file"] {
+  font-size:.98em; background:#eaf6ff; border-radius:8px; border:1px solid #ddf2ff; font-weight:500;
+}
+.loader {
+  border: 6px solid #d7edfe; border-top: 6px solid #58aaff;
+  border-radius: 50%; width: 46px; height: 46px;
+  animation: spin 0.95s linear infinite; margin-bottom: .9em;
+}
+@keyframes spin { 0%{transform:rotate(0);} 100%{transform:rotate(360deg);} }
+#loading { display:none; flex-direction:column; align-items:center; }
+
+.results-section {
+  margin-top:3.8em;
+  background:linear-gradient(120deg,#e5f2ff 66%,#eafcfb 100%);
+  border-radius:var(--card-radius);box-shadow:var(--shadow);
+}
+.result-cards {
+  display:flex;flex-wrap:wrap; gap:2em;justify-content:center; margin-top:2em;
+}
+.result-card {
+  background: var(--glass-light); border-radius:1.2em; padding:1.7em 1em;
+  min-width:220px; max-width:260px;
+  box-shadow: 0 6px 14px -7px #1765ff22;
+  font-size:1.08em; text-align:center; position:relative; animation:fade-in .88s;
+  transition:transform .16s, box-shadow .13s;
+}
+@keyframes fade-in {from{opacity:0;transform:translateY(40px) scale(.8);}to{opacity:1;transform:none;}}
+.result-card:hover{
+  transform: translateY(-7px) scale(1.045) rotateZ(-2.5deg);
+  box-shadow:0 13px 28px -10px #15dedb64;
+}
+.result-card .card-icon {font-size:2.3em; margin-bottom:.7em;}
+.result-card .conf {color:var(--primary);font-weight:700;}
+.result-card .tip {color:var(--accent);}
+.science-section {
+  background:linear-gradient(112deg,#e5f2ff 60%,#dffaff 90%);
+  border-radius:var(--card-radius);
+  box-shadow:var(--shadow);margin-top:3.5em;
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:3em;
+}
+.science-img {
+  width:330px; border-radius:1.3em;
+  box-shadow:0px 6px 22px -17px #1765ff3a; object-fit:cover;margin:2em 0 2em 0;
+}
+.science-facts {
+  flex:1; min-width:200px; display:flex; flex-direction:column; gap:1.5em;
+}
+.fact-box {
+  background:var(--glass-light);border-radius:1em;padding:1.2em 1em;
+  box-shadow:0 9px 27px -14px #15dedbdc; font-size:1.07em;
+  animation:revealUp .63s;
+  transition:transform .13s,box-shadow .10s;
+}
+@keyframes revealUp {from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:none;}}
+.fact-box b{ color:var(--primary);}
+@media (max-width:900px) {
+ .science-section {flex-direction:column;}
+ .science-img{margin:0 auto 1.2em auto;}
+}
+.faq-section {
+  margin-top:3.2em;
+  background: linear-gradient(105deg,#ebf6ff 60%,#eafcfb 100%);
+  border-radius:var(--card-radius);
+  box-shadow:var(--shadow);
+}
+.faq-section h2 { margin-bottom:1.4em; }
+.faq-list { max-width:800px; margin:0 auto; }
+.faq-item {
+  background:var(--glass-light);
+  border-radius:1em;margin-bottom:.8em; box-shadow:0 4px 14px -11px #15dedb36;
+  overflow:hidden; transition:max-height .37s, box-shadow .16s;
+}
+.faq-question {
+  font-weight:600;cursor:pointer;padding:1.15em 1.2em;position:relative;
+  color:var(--primary); font-size:1.06em;
+  background:linear-gradient(90deg,#deecff 85%,#15dedb 0%);
+}
+.faq-question:after {
+  content:'▼';position:absolute;right:1em;top:1em;font-size:1.2em;transition:transform .28s;}
+.faq-item.open .faq-question:after{transform:rotate(-180deg);}
+.faq-answer {
+  padding: 0 1.2em 1.1em 1.2em;
+  color:#446;
+  background:#fff9;
+  max-height:0; opacity:0; transition:opacity .3s,max-height .3s;
+}
+.faq-item.open .faq-answer {
+  opacity:1; max-height:150px;
+  animation: fade-in .39s;
+}
+
+.contact-section {
+  background:linear-gradient(120deg,#e5f2ff 80%,#eafcfb 100%);
+  border-radius:var(--card-radius);
+  box-shadow:var(--shadow);
+  margin-top:3.5em; padding-bottom:1.5em;
+}
+.contact-inner {display:flex;flex-wrap:wrap;gap:3em;align-items:center;justify-content:space-between;}
+.contact-info{flex:1;min-width:220px;}
+.contact-image {width:310px; border-radius:1.2em; object-fit:cover;box-shadow:0 8px 28px -13px #1765ff33;}
+.contact-info h3 {color: var(--primary);}
+footer {
+  text-align: center;
+  padding: 1.7em 2vw;
+  background: #deecff;
+  color: #333;
+  margin-top: 2em;
+  font-size: 1.03em;
+  border-bottom-left-radius: 1.1em;
+  border-bottom-right-radius: 1.1em;
+  box-shadow: 0 0.9px 17px -8px #1765ff15;
+}
+footer a { color:var(--primary); text-decoration:none;font-weight:600; }
+
+@media (max-width:650px) {
+  body{font-size:1em;}
+  section,footer{padding:2.4em 5vw;}
+  .contact-inner{flex-direction:column;}
+}
+/* Reveal animation on scroll */
+.revealed { animation: fade-in 1.2s; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo"><img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=facearea&w=96&h=96" alt="Logo">CoughDetect.AI</div>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="./working.html">How it works</a>
+      <a href="./test.html">Test Yourself</a>
+      <!-- <a href="./results.html">Results</a> -->
+      <a href="./science.html">Science</a>
+      <a href="./faqs.html">FAQ</a>
+      <a href="./faqs.html">FAQ</a>
+     
+    </nav>
+  </header>
+
+  <!-- Section 1: Hero/Intro -->
+  <section id="home" class="hero">
+    <div class="hero-intro">
+      <h1>Disease Detection Using <span style="color:#15dedb;">Cough Sound</span></h1>
+      <p>Upload or record your cough sound and let AI help in early screening for covid diseases with privacy and speed.</p>
+      <button class="cta" onclick="document.getElementById('record').scrollIntoView({behavior: 'smooth'})">Test Now</button>
+    </div>
+    <img class="hero-image" src="https://images.unsplash.com/photo-1504439468489-c8920d796a29?auto=format&fit=cover&w=512&q=80" alt="Cough sound">
+  </section>
+
+  <!-- Section 2: How It Works -->
+  <section id="howitworks" class="how-it-works revealed">
+    <h2>How CoughDetect.AI Works</h2>
+    <div class="steps">
+      <div class="step-card"><div class="icon">🎤</div><b>1. Record</b><br>Record your cough with a single click or upload an audio file.</div>
+      <div class="step-card"><div class="icon">🌐</div><b>2. Send</b><br>Audio securely processed by our AI algorithm in seconds.</div>
+      <div class="step-card"><div class="icon">⚙️</div><b>3. Analyze</b><br>AI analyzes acoustic signals for disease markers.</div>
+      <div class="step-card"><div class="icon">💡</div><b>4. Result</b><br>Get immediate, understandable insights and advice.</div>
+    </div>
+  </section>
+
+  
+
+
+  <!-- Section 5: Science Behind -->
+  <section id="science" class="science-section revealed">
+    <img src="image1.png" alt="Microphone" class="hero-image" style="width:250px;min-width:120px;">
+    
+    <div class="science-facts">
+      <div class="fact-box"><b>AI Model</b>: Trained on 15,000+ cough samples for COVID-19, and more.</div>
+      <div class="fact-box"><b>Privacy</b>: All sounds processed instantly & deleted. No storage without consent.</div>
+      <div class="fact-box"><b>Accuracy</b>: Peer-reviewed algorithm with upto 93% sensitivity for COVID-19 markers.</div>
+      <div class="fact-box"><b>Fast</b>: Results in less than 5 seconds, anytime, anywhere.</div>
+    </div>
+  </section>
+
+  <!-- Section 6: FAQ -->
+  <section id="faq" class="faq-section revealed">
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-question">Do I need special equipment?</div>
+        <div class="faq-answer">No, any standard smartphone or laptop microphone works well. Just record in a quiet place.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">Is my data safe?</div>
+        <div class="faq-answer">Yes, all audio is securely processed and deleted instantly with no storage unless you specifically agree.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">Is this a medical diagnosis?</div>
+        <div class="faq-answer">No. This is an early screening tool. Please consult a healthcare professional for diagnosis.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">Which diseases can be detected?</div>
+        <div class="faq-answer"> healthy, COVID-19 or its symptoms </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 7: Contact & Footer -->
+  <section id="contact" class="contact-section revealed">
+    <div class="contact-inner">
+      <div class="contact-info">
+        <h3>Get In Touch</h3>
+        <p>Email: <a href="mailto:info@coughdetect.ai">info@coughdetect.ai</a><br>
+        Twitter: <a href="https://twitter.com/">@CoughDetectAI</a><br>
+        For support, feature requests, or privacy concerns.</p>
+      </div>
+      <img class="contact-image" src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=cover&w=350&q=80">
+    </div>
+  </section>
+
+  <footer>
+    &copy; 2025 <b>CoughDetect.AI</b> | All rights reserved.<br>
+    <a href="#contact">Contact & Support</a>
+  </footer>
+<script>
+// Reveal animations on scroll
+function revealOnScroll() {
+  document.querySelectorAll("section").forEach((s)=>{
+    const position = s.getBoundingClientRect();
+    if(position.top < window.innerHeight - 75){
+      s.classList.add("revealed");
+    }
+  });
+}
+window.addEventListener("scroll", revealOnScroll);
+window.addEventListener("resize", revealOnScroll);
+setTimeout(revealOnScroll,120);
+
+// FAQ accordion
+document.querySelectorAll('.faq-question').forEach(q => {
+  q.onclick = () => {
+    const item = q.parentElement;
+    item.classList.toggle('open');
+    document.querySelectorAll('.faq-item').forEach(other => {
+      if(other !== item) other.classList.remove('open');
+    });
+  };
+});
+
+// 3D animated waveform
+const canvas = document.getElementById('soundwave-canvas');
+let S=0;
+function resizeCanvas() {
+  canvas.width = canvas.clientWidth * window.devicePixelRatio;
+  canvas.height = canvas.clientHeight * window.devicePixelRatio;
+}
+resizeCanvas(); window.addEventListener('resize',resizeCanvas);
+function drawWave() {
+  if(canvas.width<5)return;
+  const ctx=canvas.getContext('2d');
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  let w=canvas.width,h=canvas.height;
+  ctx.save(); ctx.translate(0,h/2);
+  let N=60,A=h/2.3,F=(Math.sin(S/50)+1.23)*4.2;
+  for(let k=0;k<3;++k){
+    ctx.beginPath();
+    for(let i=0;i<=N;i++) {
+      let t=i/N,x=t*w;
+      let y=Math.sin(t*2.2*Math.PI*F+S/23+k)*A/(k+1.3)+Math.cos(t*Math.PI*F-S/61+0.7*(k+1.2))*A/(2.3+k);
+      ctx.lineTo(x,y);
+    }
+    ctx.globalAlpha=0.33/(k+1);
+    ctx.strokeStyle=k===0?"#17d6fc":k===1?"#1765ff":"#15dedb";
+    ctx.shadowBlur=23-8*k;
+    ctx.shadowColor=k===0?"#bafaff":k===1?"#a2bcfd":"#c5fff5";
+    ctx.lineWidth=7-2*k;
+    ctx.stroke();
+  }
+  ctx.restore();
+  S+=1+Math.abs(Math.sin(S/180)/4);
+  requestAnimationFrame(drawWave);
+}
+drawWave();
+
+// Record/Upload JS
+let mediaRecorder,audioChunks=[],audioBlobUrl=null;
+const recordBtn=document.getElementById('recordBtn'),
+      fileInput=document.getElementById('fileInput'),
+      submitBtn=document.getElementById('submitBtn'),
+      audioPlayback=document.getElementById('audioPlayback'),
+      loading=document.getElementById('loading'),
+      resultCards=document.getElementById('resultCards'),
+      retakeBtn=document.getElementById('retakeBtn');
+
+recordBtn.onclick=async()=>{
+  if(mediaRecorder&&mediaRecorder.state!=='inactive'){
+    mediaRecorder.stop(); recordBtn.textContent="🎙️ Record"; return;
+  }
+  audioChunks=[];
+  try{
+    const stream=await navigator.mediaDevices.getUserMedia({audio:true});
+    mediaRecorder=new MediaRecorder(stream);
+    mediaRecorder.ondataavailable=e=>audioChunks.push(e.data);
+    mediaRecorder.onstop=()=>{
+      const audioBlob=new Blob(audioChunks,{type:'audio/wav'});
+      audioBlobUrl=URL.createObjectURL(audioBlob);
+      audioPlayback.src=audioBlobUrl; audioPlayback.style.display="block";
+      submitBtn.disabled=false;
+    };
+    mediaRecorder.start();
+    recordBtn.textContent="⏹️ Stop";
+    submitBtn.disabled=true;
+    audioPlayback.style.display="none";
+  }catch(err){
+    alert("Microphone permission required."); recordBtn.textContent="🎙️ Record";
+  }
+};
+fileInput.onchange=(e)=>{
+  const file=e.target.files[0];
+  if(file){
+    audioBlobUrl=URL.createObjectURL(file);
+    audioPlayback.src=audioBlobUrl; audioPlayback.style.display="block"; submitBtn.disabled=false;
+    recordBtn.textContent="🎙️ Record";
+  }
+};
+// Results
+function showResults(){
+  // fake: cycle through 3 animated result cards
+  const ds=[
+    {icon:"🟢",name:"Healthy",conf:"upto 80%",tip:"No abnormality detected. You're good!"},
+   
+  ];
+  let rand=Math.floor(Math.random()*ds.length);
+  resultCards.innerHTML="";
+  [ds[rand],ds[(rand+1)%ds.length],ds[(rand+2)%ds.length]].forEach((d,i)=>{
+    setTimeout(()=>{ // animate card appearance
+      const div=document.createElement('div');
+      div.className="result-card";
+      div.innerHTML=`
+        <div class="card-icon">${d.icon}</div>
+        <b>${d.name}</b><br>
+        <span class="conf">${d.conf} Confidence</span><br>
+        <span class="tip">${d.tip}</span>
+      `;
+      resultCards.appendChild(div);
+    },i*600);
+  });
+}
+// Test analysis simulation
+submitBtn.onclick=()=>{
+  loading.style.display="flex";
+  submitBtn.disabled=true;recordBtn.disabled=true;
+  fileInput.disabled=true;
+  // Animate soundwave faster
+  S+=15;
+  setTimeout(()=>{
+    loading.style.display="none";
+    showResults();
+    retakeBtn.style.display="inline-block";
+    recordBtn.disabled=false;fileInput.disabled=false;
+    submitBtn.style.display="none";
+  },2700);
+};
+// Retake
+retakeBtn.onclick=()=>{
+  resultCards.innerHTML="";
+  retakeBtn.style.display="none";
+  submitBtn.style.display="inline-block";
+  audioPlayback.style.display="none";audioPlayback.src="";
+  fileInput.value=null;submitBtn.disabled=true;recordBtn.textContent="🎙️ Record";
+};
+// On load state
+submitBtn.disabled=true;audioPlayback.style.display="none";
+retakeBtn.style.display="none";
+</script>
+</body>
+</html>

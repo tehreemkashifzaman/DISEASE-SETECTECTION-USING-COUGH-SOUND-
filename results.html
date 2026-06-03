@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Your Cough AI Results - CoughDetect.AI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+:root {
+  --primary: #1765ff;
+  --accent: #15dedb;
+  --chronic: #fbc02d;
+  --glass-light: rgba(255,255,255,0.92);
+  --card-radius: 2rem;
+  --shadow: 0 8px 32px 0 #1e2b6258;
+}
+body {
+  font-family: 'Montserrat', 'Quicksand', Arial, sans-serif;
+  margin: 0;
+  background: linear-gradient(106deg, #e9f4ff 0%, #d8f9f8 100%);
+  color: #232d38;
+}
+header {
+  background: var(--glass-light);
+  box-shadow: 0 4px 14px -8px #1765ff22;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.8em 3vw;
+  position: sticky; top: 0; z-index: 10;
+}
+header .logo {
+  font-weight: 700;
+  font-size: 1.45em;
+  color: var(--primary);
+  letter-spacing:.03em;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+header .logo img {width:38px;height:38px;border-radius:11px;}
+nav a {
+  margin-left: 24px;
+  color: #355;
+  text-decoration: none;
+  font-weight: 600;
+  font-family: 'Quicksand';
+  padding: 0.45em 1em;
+  border-radius: .7em;
+  transition: background .18s, color .18s;
+  font-size: 1.08em;
+}
+nav a:hover { background: var(--primary); color: #fff; }
+main {max-width: 670px; margin: 5.2em auto 0 auto; background: var(--glass-light); border-radius: var(--card-radius); box-shadow: var(--shadow); padding: 3em 2vw 2em 2vw;}
+@media (max-width:700px) {
+  header { flex-direction:column; gap:5px;}
+  main {margin-top: 2.6em;}
+}
+.results-header {text-align:center;margin-bottom:.7em;}
+.results-header img {width:54px;vertical-align:middle;margin-right:14px;}
+.results-title {
+  display:inline-block;font-size:2em;font-weight:700;color:var(--primary);vertical-align:middle;
+}
+.results-sub {
+  color:#33456e;
+  margin-bottom:2em;
+  text-align:center;
+  font-size:1.13em;
+  font-family:Quicksand;
+}
+.result-card {
+  background: var(--glass-light); border-radius: 1.3em; padding: 2em 1em;
+  max-width: 350px; margin:2.3em auto 0 auto;
+  box-shadow: 0 6px 14px -7px #1765ff22;
+  text-align: center; position: relative; font-size: 1.14em;
+  display:flex;flex-direction:column;align-items:center;
+}
+.card-top-icon img {width:66px; height:66px; border-radius:1em; margin-bottom:.8em;}
+.result-main-disease{color:var(--primary);font-size:1.33em;font-weight:700;margin-bottom:.35em;}
+.chronic-chip, .acute-chip {
+  display:inline-block; margin-left:.5em; font-size:.95em; font-weight:600;
+  border-radius:.7em; padding:.15em .87em .15em .77em; letter-spacing:.01em;
+}
+.chronic-chip{ background: var(--chronic); color: #fff;}
+.acute-chip { background: var(--accent); color: #045;}
+.result-main-conf {color: var(--primary); font-weight: 600;font-size:1.12em;margin-bottom:.3em;}
+.result-main-type {margin-bottom:.7em;}
+.result-tip {color: #15b98e; font-size: 1em;font-family:Quicksand;margin:.2em 0 0 0;}
+@media (max-width:600px){ .result-card{padding:1.2em .4em;} .results-header img {width:38px;}}
+.result-note {
+  margin:2.2em auto 0 auto;
+  background:#eaf6fc;color:#444;margin-bottom:1.6em;
+  border-radius:.9em;
+  padding:1.1em 1.3em;
+  box-shadow:0 2px 14px -8px #15dedb33;
+  text-align:center;font-size:.97em;
+}
+footer {
+  text-align: center;
+  padding: 1.4em 2vw 1em 2vw;
+  background: #deecff;
+  color: #333;
+  font-size: 1.03em;
+  border-radius: 0 0 1.1em 1.1em;
+  margin-top: 3.5em;
+}
+footer a { color: var(--primary); text-decoration: none; font-weight: 600;}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <img src="https://img.icons8.com/external-flat-icons-inmotus-design/67/external-cough-medical-flat-icons-inmotus-design.png" alt="Logo">
+      CoughDetect.AI
+    </div>
+    <!-- <nav>
+      <a href="index.html">Home</a>
+      <a href="index.html#howitworks">How It Works</a>
+      <a href="test-yourself.html">Test Yourself</a>
+    </nav> -->
+  </header>
+  <main>
+    <div class="results-header">
+      <img src="https://img.icons8.com/color/96/medical-results.png" alt="Result Icon">
+      <span class="results-title">Your Results</span>
+    </div>
+    <div class="results-sub">
+      See what our AI detected in your cough.<br>
+      <span style="color:#396;">Your result will indicate not just the likely disease, but if it is <b>chronic</b> or <b>acute</b> in pattern!</span>
+    </div>
+    <div id="dynamicResult"></div>
+    <div class="result-note">
+      <b>Note:</b> <br>
+      <span class="acute-chip">Acute</span>: New/sudden-onset (e.g. COVID-19, pneumonia, flu).<br>
+      <span class="chronic-chip">Chronic</span>: Long-term or recurring (e.g. asthma, COPD, chronic bronchitis).
+    </div>
+    <button id="analyzeAgain" style="margin:1.2em auto 0 auto;display:block;padding:.7em 2em; background:linear-gradient(90deg,#1765ff 30%,#15dedb 100%);color:#fff;border:none;border-radius:1em;font-size:1.09em;font-weight:600;cursor:pointer;box-shadow:0 2px 8px -3px #1765ff12">
+      Analyze Another Cough
+    </button>
+  </main>
+  <footer>
+    &copy; 2025 <b>CoughDetect.AI</b> | For information only, not a diagnosis.<br>
+    <a href="index.html#contact">Contact & Support</a>
+  </footer>
+<script>
+function randomResult() {
+  // Provide random sample results
+  const samples=[
+    {
+      type:"Acute",
+      chip:'<span class="acute-chip">Acute</span>',
+      icon:"https://img.icons8.com/color/64/coronavirus.png",
+      name:"COVID-19 Likely",
+      conf:"92%",
+      tip:"Acute sound features detected. Please consider a PCR/antigen test and follow guidelines."
+    },
+    {
+      type:"Chronic",
+      chip:'<span class="chronic-chip">Chronic</span>',
+      icon:"https://img.icons8.com/color/64/inhaler.png",
+      name:"Asthma Possible",
+      conf:"89%",
+      tip:"Chronic pattern detected — similar to asthma. Keep inhaler nearby and consider doctor follow-up."
+    },
+    {
+      type:"Acute",
+      chip:'<span class="acute-chip">Acute</span>',
+      icon:"https://img.icons8.com/color/64/lungs.png",
+      name:"Pneumonia Possible",
+      conf:"84%",
+      tip:"Sudden infection suspected. If fever and shortness of breath, seek care."
+    },
+    {
+      type:"Chronic",
+      chip:'<span class="chronic-chip">Chronic</span>',
+      icon:"https://img.icons8.com/color/64/pulmonary-disease.png",
+      name:"COPD Likely",
+      conf:"86%",
+      tip:"Long-term cough features detected. Please continue prescribed management and visit your provider."
+    },
+    {
+      type:"Chronic/Acute",
+      chip:'<span class="chronic-chip">Chronic</span> / <span class="acute-chip">Acute</span>',
+      icon:"https://img.icons8.com/color/64/bronchitis.png",
+      name:"Bronchitis",
+      conf:"81%",
+      tip:"Pattern can be either chronic or acute. Get checked if cough persists/or has new onset."
+    },
+    {
+      type:"Healthy",
+      chip:"",
+      icon:"https://img.icons8.com/color/64/checked-checkbox.png",
+      name:"No abnormality detected",
+      conf:"98%",
+      tip:"Your cough sound does not match any respiratory illness. Practice good health habits!"
+    }
+  ];
+  let i = Math.floor(Math.random()*samples.length);
+  return samples[i];
+}
+
+function showResult() {
+  const d = randomResult();
+  document.getElementById('dynamicResult').innerHTML = `
+    <div class="result-card">
+      <div class="card-top-icon"><img src="${d.icon}" alt=""></div>
+      <div class="result-main-disease">
+        ${d.name} ${d.chip}
+      </div>
+      <div class="result-main-conf">${d.conf} Confidence</div>
+      <div class="result-main-type"><b>Status:</b> ${d.type}</div>
+      <div class="result-tip">${d.tip}</div>
+    </div>
+  `;
+}
+showResult();
+
+document.getElementById('analyzeAgain').onclick = function() {
+  showResult();
+  window.scrollTo({top: 0, behavior: 'smooth'});
+};
+</script>
+</body>
+</html>
+
+window.onload = () => {
+    const params = new URLSearchParams(window.location.search);
+    const predictedClass = params.get('class');
+    const confidence = (parseFloat(params.get('conf')) * 100).toFixed(1);
+
+    // Update the UI
+    document.getElementById('disease-name').innerText = predictedClass;
+    document.getElementById('confidence-val').innerText = confidence + "%";
+    
+    // Logic to show Chronic or Acute chips based on the class
+    if(predictedClass === 'asthma') {
+        document.getElementById('chip-container').innerHTML = '<span class="chronic-chip">Chronic</span>';
+    }
+};

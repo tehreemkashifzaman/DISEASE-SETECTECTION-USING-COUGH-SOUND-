@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>FAQs - CoughDetect.AI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+:root {
+  --primary: #1765ff;
+  --accent: #15dedb;
+  --glass-light: rgba(255,255,255,0.96);
+  --card-radius: 2rem;
+  --shadow: 0 8px 32px 0 #1e2b6258;
+}
+body {
+  font-family: 'Montserrat', 'Quicksand', Arial, sans-serif;
+  margin: 0;
+  background: linear-gradient(105deg,#eaf6ff 0%,#ddf9fa 100%);
+  color: #232d38;
+}
+header {
+  background: var(--glass-light);
+  box-shadow: 0 4px 14px -8px #1765ff22;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.8em 3vw;
+  position: sticky; top: 0; z-index: 10;
+}
+header .logo {
+  font-size: 1.25em;
+  font-weight: 700;
+  color: var(--primary);
+  letter-spacing:.03em;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+nav a {
+  margin-left: 24px;
+  color: #355;
+  text-decoration: none;
+  font-weight: 600;
+  font-family: 'Quicksand';
+  padding: 0.45em 1em;
+  border-radius: .7em;
+  transition: background .18s, color .18s;
+  font-size: 1.07em;
+}
+nav a:hover { background: var(--primary); color: #fff; }
+main {max-width: 800px; margin: 3.6em auto 0 auto; background: var(--glass-light); border-radius: var(--card-radius); box-shadow: var(--shadow); padding: 2.2em 2vw 2em 2vw;}
+@media (max-width:650px) {
+  header { flex-direction:column; gap:5px;}
+  main {margin-top: 2em;}
+}
+.faqs-title {
+  text-align:center; font-size:2.1em; font-weight:800; color:var(--primary); letter-spacing:.01em; font-family:Quicksand; margin-bottom:1.6em;
+}
+.faq-list { max-width:750px; margin:0 auto; }
+.faq-item {
+  background: var(--glass-light);
+  border-radius:1em; margin-bottom:.8em; box-shadow:0 3px 13px -10px #1765ff17;
+  overflow: hidden; transition: max-height .33s, box-shadow .14s;
+}
+.faq-question {
+  font-weight:600; font-family:Quicksand;
+  cursor:pointer; padding:1.15em 1.2em; position:relative;
+  color:var(--primary); font-size:1.13em; background:linear-gradient(90deg,#deecff 85%,#15dedb 0%);
+}
+.faq-question:after {
+  content:'▼'; position:absolute;right:1em;top:1em;font-size:1.2em;transition:transform .27s;}
+.faq-item.open .faq-question:after{transform:rotate(-180deg);}
+.faq-answer {
+  padding: .8em 1.2em 1.1em 1.2em;
+  color:#446;
+  background:#fff9;
+  max-height:0; opacity:0; transition:opacity .26s,max-height .27s;
+  border-top:1px solid #e3ebf9;
+  font-size:1.03em; font-family:Montserrat;
+}
+.faq-item.open .faq-answer {
+  opacity:1; max-height: 150px;
+}
+footer {
+  text-align: center;
+  padding: 1.6em 2vw 1em 2vw;
+  background: #deecff;
+  color: #333;
+  font-size: 1.03em;
+  border-radius: 0 0 1.1em 1.1em;
+  margin-top: 3em;
+}
+footer a { color: var(--primary); text-decoration: none; font-weight: 600;}
+  </style>
+</head>
+<body>
+<header>
+  <div class="logo">CoughDetect.AI</div>
+  <!-- <nav>
+    <a href="index.html">Home</a>
+    <a href="index.html#howitworks">How It Works</a>
+    <a href="science.html">Science</a>
+    <a href="faqs.html">FAQs</a>
+    <a href="index.html#contact">Contact</a>
+  </nav> -->
+</header>
+<main>
+  <div class="faqs-title">Frequently Asked Questions</div>
+  <div class="faq-list">
+    <div class="faq-item">
+      <div class="faq-question">Do I need special equipment?</div>
+      <div class="faq-answer">No, any standard smartphone, tablet, or laptop microphone works well. Just record in a quiet environment.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">Is my data safe and private?</div>
+      <div class="faq-answer">Yes, your cough sound is deleted after analysis unless you give explicit permission to contribute it for research. All analysis is encrypted and compliant with privacy standards.</div>
+    </div>
+    
+    
+    <div class="faq-item">
+      <div class="faq-question">Does it give a medical diagnosis?</div>
+      <div class="faq-answer">No, this is an early screening tool only. Always consult a licensed healthcare professional for official diagnoses and treatment decisions.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">How accurate are the results?</div>
+      <div class="faq-answer">Clinical studies show 70-77% sensitivity for most acute and chronic respiratory conditions. The system continues to improve by learning from anonymized samples (if you opt in for research).</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">Can I use the results for my doctor?</div>
+      <div class="faq-answer">Yes. Your results are private and you may share them with your healthcare provider, who can use the information as an aid in early detection.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">Can anyone use the service?</div>
+      <div class="faq-answer">Anyone with internet and a device microphone can use CoughDetect.AI, including in low-resource areas. The service is designed for global accessibility.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">How quickly do I get results?</div>
+      <div class="faq-answer">Results are typically delivered in 5 seconds or less after you submit your cough sound!</div>
+    </div>
+  </div>
+</main>
+<footer>
+  &copy; 2025 <b>CoughDetect.AI</b> | All rights reserved.<br>
+  <a href="index.html#contact">Contact & Support</a>
+</footer>
+<script>
+// FAQ accordion
+document.querySelectorAll('.faq-question').forEach(q => {
+  q.onclick = () => {
+    const item = q.parentElement;
+    item.classList.toggle('open');
+    document.querySelectorAll('.faq-item').forEach(other => {
+      if(other !== item) other.classList.remove('open');
+    });
+  };
+});
+</script>
+</body>
+</html>
